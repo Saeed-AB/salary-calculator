@@ -10,17 +10,21 @@
   },
   "form": {
     "totalSalary": "Total Salary",
-    "transformAmount": "Transform Amount (GOSI)",
+    "transformAmount": "Transform to Saudi Riyal",
+    "gosiFactorYemeni": "Transform to Yemeni Riyal (GOSI factor)",
     "overtimeHours": "Overtime (1.5x)",
     "overtimeHoursDouble": "Overtime (2x)",
-    "deductionsMinutes": "Deductions (minutes)",
+    "deductions": "Deductions",
     "calculate": "Calculate",
     "reset": "Reset",
     "required": "Required",
+    "h_m": "h:m",
+    "format_hours": "Format must be h:m",
     "must_be_at_least_one": "Must be at least 1"
   },
   "result": {
     "baseSalary": "Base Salary (65%)",
+    "allowances": "Allowances (35%)",
     "gosi": "GOSI",
     "overtime": "Overtime (Total)",
     "overtime15": "Overtime (1.5x)",

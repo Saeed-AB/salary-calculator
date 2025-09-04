@@ -1,9 +1,12 @@
+import { timeToMinutes } from "@/lib/utils";
+
 export type UseSalaryCalculationArgs = {
   totalSalary: number;
   transformAmount: number;
-  overtimeHours: number; // 1.5x
-  overtimeHoursDouble: number; // 2x
-  deductionsMinutes: number;
+  gosiFactor: number;
+  overtimeHours: string;
+  overtimeHoursDouble: string;
+  deductions: string;
 };
 
 function round2(value: number): number {
@@ -15,16 +18,19 @@ export function calculateBaseSalary(totalSalary: number): number {
 }
 
 const overtimeBase = (baseSalary: number) => {
-  const hourly = baseSalary / 30 / 8; // daily 8 hours
-  return ({ hours, rate }: { hours: number; rate: number }) => {
-    return hourly * hours * rate;
+  const hourly = baseSalary / 30 / 8 / 60; // daily 8 hours
+  return ({ minutes, rate }: { minutes: number; rate: number }) => {
+    return round2(hourly * minutes * rate);
   };
 };
 
-export function calculateGosi(salary: number, transformAmount: number): number {
-  if (!transformAmount || transformAmount === 0) return 0;
-  console.log(salary * 106 * 0.06);
-  return round2((salary * 106 * 0.06) / transformAmount);
+export function calculateGosi(
+  salary: number,
+  transformAmount: number,
+  gosiFactor: number
+): number {
+  if (!transformAmount || !gosiFactor) return 0;
+  return round2((salary * gosiFactor * 0.06) / transformAmount);
 }
 
 export function calculateDeductions(salary: number, minutes: number): number {
@@ -36,27 +42,32 @@ const useSalaryCalculation = (args: UseSalaryCalculationArgs) => {
   const {
     totalSalary,
     transformAmount,
+    gosiFactor,
     overtimeHours,
     overtimeHoursDouble,
-    deductionsMinutes,
+    deductions: deductionsTimeFormat,
   } = args;
 
   const baseSalary = calculateBaseSalary(totalSalary);
+  const allowances = totalSalary - baseSalary;
 
   const calculateOvertime = overtimeBase(baseSalary);
 
   const overtimeSingleAmount = calculateOvertime({
-    hours: overtimeHours,
+    minutes: timeToMinutes(overtimeHours),
     rate: 1.5,
   });
 
   const overtimeDoubleAmount = calculateOvertime({
-    hours: overtimeHoursDouble,
+    minutes: timeToMinutes(overtimeHoursDouble),
     rate: 2,
   });
 
-  const gosi = calculateGosi(totalSalary, transformAmount);
-  const deductions = calculateDeductions(totalSalary, deductionsMinutes);
+  const gosi = calculateGosi(totalSalary, transformAmount, gosiFactor);
+  const deductions = calculateDeductions(
+    totalSalary,
+    timeToMinutes(deductionsTimeFormat)
+  );
   const netSalary = round2(
     totalSalary +
       overtimeSingleAmount +
@@ -67,6 +78,7 @@ const useSalaryCalculation = (args: UseSalaryCalculationArgs) => {
 
   return {
     baseSalary,
+    allowances,
     overtimeSingleAmount,
     overtimeDoubleAmount,
     gosi,

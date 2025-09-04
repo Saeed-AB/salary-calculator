@@ -10,17 +10,21 @@
   },
   "form": {
     "totalSalary": "الراتب الإجمالي",
-    "transformAmount": "قيمة التحويل (التأمينات)",
+    "transformAmount": "التحويل إلى الريال السعودي",
+    "gosiFactorYemeni": "التحويل إلى الريال اليمني (عامل التأمينات)",
     "overtimeHours": "ساعات إضافية (1.5x)",
     "overtimeHoursDouble": "ساعات إضافية (2x)",
-    "deductionsMinutes": "الخصومات (دقائق)",
+    "deductions": "الخصومات",
     "calculate": "احسب",
     "reset": "إعادة تعيين",
     "required": "مطلوب",
-    "must_be_at_least_one": "يجب أن يكون على الأقل 1"
+    "must_be_at_least_one": "يجب أن يكون على الأقل 1",
+    "format_hours": "يجب أن يكون التنسيق على شكل س:د",
+    "h_m": "س:د"
   },
   "result": {
     "baseSalary": "الراتب الأساسي (65%)",
+    "allowances": "البدلات (35%)",
     "gosi": "التأمينات",
     "overtime": "الإضافي (الإجمالي)",
     "overtime15": "الإضافي (1.5x)",

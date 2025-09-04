@@ -15,21 +15,15 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { useSalaryCalculation } from "@/hooks/useSalaryCalculation";
+import { timeFormat } from "@/lib/utils";
 
 const schema = z.object({
   totalSalary: z.string("form.required").check(z.minLength(1, "form.required")),
-  transformAmount: z.string("form.required").check((ctx) => {
-    if (!ctx.value || +ctx.value < 1) {
-      ctx.issues.push({
-        code: "custom",
-        message: "form.must_be_at_least_one",
-        input: ctx.value,
-      });
-    }
-  }),
+  transformAmount: z.string("form.required"),
+  gosiFactor: z.string("form.required"),
   overtimeHours: z.string("form.required"),
   overtimeHoursDouble: z.string("form.required"),
-  deductionsMinutes: z.string("form.required"),
+  deductions: z.string("form.required"),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -41,9 +35,10 @@ const safe = (amount?: string | null, defaultValue: number = 0) => {
 const defaultValues = {
   totalSalary: "",
   transformAmount: "425",
+  gosiFactor: "106",
   overtimeHours: "",
   overtimeHoursDouble: "",
-  deductionsMinutes: "",
+  deductions: "",
 };
 
 export default function HomePage() {
@@ -59,10 +54,11 @@ export default function HomePage() {
 
   const live = useSalaryCalculation({
     totalSalary: safe(values.totalSalary),
-    transformAmount: safe(values.transformAmount, 1),
-    overtimeHours: safe(values.overtimeHours),
-    overtimeHoursDouble: safe(values.overtimeHoursDouble),
-    deductionsMinutes: safe(values.deductionsMinutes),
+    transformAmount: safe(values.transformAmount),
+    gosiFactor: safe(values.gosiFactor),
+    overtimeHours: values.overtimeHours,
+    overtimeHoursDouble: values.overtimeHoursDouble,
+    deductions: values.deductions,
   });
 
   return (
@@ -97,7 +93,24 @@ export default function HomePage() {
             />
 
             <Input
-              className="col-span-12"
+              className="col-span-12 md:col-span-6"
+              label={t("form.gosiFactorYemeni")}
+              type="text"
+              inputMode="decimal"
+              {...form.register("gosiFactor")}
+              error={
+                form.formState.errors.gosiFactor?.message
+                  ? t(form.formState.errors.gosiFactor.message)
+                  : undefined
+              }
+              onChange={(e) => {
+                const numeric = e.target.value.replace(/[^0-9.]/g, "");
+                form.setValue("gosiFactor", numeric);
+              }}
+            />
+
+            <Input
+              className="col-span-12 md:col-span-6"
               label={t("form.transformAmount")}
               type="text"
               inputMode="decimal"
@@ -109,45 +122,50 @@ export default function HomePage() {
               }
               onChange={(e) => {
                 const numeric = e.target.value.replace(/[^0-9.]/g, "");
-
                 form.setValue("transformAmount", numeric);
               }}
             />
 
             <Input
               label={t("form.overtimeHours")}
-              id="overtimeHours"
               type="text"
+              placeholder={t("form.h_m")}
               className="col-span-12 md:col-span-6"
               inputMode="decimal"
               {...form.register("overtimeHours")}
+              error={
+                form.formState.errors.overtimeHours?.message
+                  ? t(form.formState.errors.overtimeHours.message)
+                  : undefined
+              }
               onChange={(e) => {
-                const numeric = e.target.value.replace(/[^0-9.]/g, "");
-                form.setValue("overtimeHours", numeric);
+                const value = timeFormat(e.target.value);
+                form.setValue("overtimeHours", value);
               }}
             />
 
             <Input
               className="col-span-12 md:col-span-6"
               label={t("form.overtimeHoursDouble")}
+              placeholder={t("form.h_m")}
               inputMode="decimal"
               {...form.register("overtimeHoursDouble")}
               onChange={(e) => {
-                const numeric = e.target.value.replace(/[^0-9.]/g, "");
-
-                form.setValue("overtimeHoursDouble", numeric);
+                const value = timeFormat(e.target.value);
+                form.setValue("overtimeHoursDouble", value);
               }}
             />
 
             <Input
               className="col-span-12"
-              label={t("form.deductionsMinutes")}
+              label={t("form.deductions")}
+              placeholder={t("form.h_m")}
               type="text"
               inputMode="numeric"
-              {...form.register("deductionsMinutes")}
+              {...form.register("deductions")}
               onChange={(e) => {
-                const numeric = e.target.value.replace(/[^0-9.]/g, "");
-                form.setValue("deductionsMinutes", numeric);
+                const value = timeFormat(e.target.value);
+                form.setValue("deductions", value);
               }}
             />
 
@@ -165,6 +183,10 @@ export default function HomePage() {
             <div className="flex justify-between">
               <span>{t("result.baseSalary")}</span>
               <span>{live.baseSalary}</span>
+            </div>
+            <div className="flex justify-between">
+              <span>{t("result.allowances")}</span>
+              <span>{live.allowances}</span>
             </div>
             <div className="flex justify-between">
               <span>{t("result.overtime15")}</span>
