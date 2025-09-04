@@ -1,0 +1,31 @@
+{
+  "app": {
+    "title": "حاسبة الراتب",
+    "description": "احسب الراتب مع الإضافي والخصومات والتأمينات",
+    "theme": "السمة",
+    "light": "فاتح",
+    "dark": "داكن",
+    "system": "النظام",
+    "language": "اللغة"
+  },
+  "form": {
+    "totalSalary": "الراتب الإجمالي",
+    "transformAmount": "قيمة التحويل (التأمينات)",
+    "overtimeHours": "ساعات إضافية (1.5x)",
+    "overtimeHoursDouble": "ساعات إضافية (2x)",
+    "deductionsMinutes": "الخصومات (دقائق)",
+    "calculate": "احسب",
+    "reset": "إعادة تعيين",
+    "required": "مطلوب",
+    "must_be_at_least_one": "يجب أن يكون على الأقل 1"
+  },
+  "result": {
+    "baseSalary": "الراتب الأساسي (65%)",
+    "gosi": "التأمينات",
+    "overtime": "الإضافي (الإجمالي)",
+    "overtime15": "الإضافي (1.5x)",
+    "overtime20": "الإضافي (2x)",
+    "deductions": "الخصومات",
+    "netSalary": "صافي الراتب"
+  }
+}

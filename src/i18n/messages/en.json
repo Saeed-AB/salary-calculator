@@ -1,0 +1,33 @@
+{
+  "app": {
+    "title": "Salary Calculator",
+    "description": "Calculate salary with overtime, deductions and GOSI",
+    "theme": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "language": "Language"
+  },
+  "form": {
+    "totalSalary": "Total Salary",
+    "transformAmount": "Transform Amount (GOSI)",
+    "overtimeHours": "Overtime (1.5x)",
+    "overtimeHoursDouble": "Overtime (2x)",
+    "deductionsMinutes": "Deductions (minutes)",
+    "calculate": "Calculate",
+    "reset": "Reset",
+    "required": "Required",
+    "must_be_at_least_one": "Must be at least 1"
+  },
+  "result": {
+    "baseSalary": "Base Salary (65%)",
+    "gosi": "GOSI",
+    "overtime": "Overtime (Total)",
+    "overtime15": "Overtime (1.5x)",
+    "overtime20": "Overtime (2x)",
+    "deductions": "Deductions",
+    "netSalary": "Net Salary"
+  }
+}
+
+
