@@ -7,6 +7,7 @@ export type UseSalaryCalculationArgs = {
   overtimeHours: string;
   overtimeHoursDouble: string;
   deductions: string;
+  transportationAllowance?: boolean
 };
 
 function round2(value: number): number {
@@ -45,6 +46,7 @@ const useSalaryCalculation = (args: UseSalaryCalculationArgs) => {
     gosiFactor,
     overtimeHours,
     overtimeHoursDouble,
+    transportationAllowance,
     deductions: deductionsTimeFormat,
   } = args;
 
@@ -73,7 +75,8 @@ const useSalaryCalculation = (args: UseSalaryCalculationArgs) => {
       overtimeSingleAmount +
       overtimeDoubleAmount -
       gosi -
-      deductions
+      deductions +
+      (transportationAllowance ? 150 : 0)
   );
 
   return {

@@ -20,6 +20,7 @@
     "required": "مطلوب",
     "must_be_at_least_one": "يجب أن يكون على الأقل 1",
     "format_hours": "يجب أن يكون التنسيق على شكل س:د",
+    "transportationAllowance": "بدل النقل",
     "h_m": "س:د"
   },
   "result": {

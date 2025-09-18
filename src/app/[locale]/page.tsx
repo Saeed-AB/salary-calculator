@@ -2,7 +2,7 @@
 import { useTranslations } from "next-intl";
 import { z } from "zod/mini";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -16,6 +16,8 @@ import {
 } from "@/components/ui/card";
 import { useSalaryCalculation } from "@/hooks/useSalaryCalculation";
 import { timeFormat } from "@/lib/utils";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 
 const schema = z.object({
   totalSalary: z.string("form.required").check(z.minLength(1, "form.required")),
@@ -24,6 +26,7 @@ const schema = z.object({
   overtimeHours: z.string("form.required"),
   overtimeHoursDouble: z.string("form.required"),
   deductions: z.string("form.required"),
+  transportationAllowance: z.optional(z.boolean()),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -59,6 +62,7 @@ export default function HomePage() {
     overtimeHours: values.overtimeHours,
     overtimeHoursDouble: values.overtimeHoursDouble,
     deductions: values.deductions,
+    transportationAllowance: values.transportationAllowance,
   });
 
   return (
@@ -167,6 +171,23 @@ export default function HomePage() {
                 const value = timeFormat(e.target.value);
                 form.setValue("deductions", value);
               }}
+            />
+
+            <Controller
+              control={form.control}
+              name="transportationAllowance"
+              render={({ field }) => (
+                <div className="flex items-start gap-3 col-span-12">
+                  <Checkbox
+                    id="transportationAllowance"
+                    defaultChecked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                  <Label htmlFor="transportationAllowance">
+                    {t("form.transportationAllowance")}
+                  </Label>
+                </div>
+              )}
             />
 
             <div className="flex gap-3 sm:col-span-2">

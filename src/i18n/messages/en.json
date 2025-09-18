@@ -20,6 +20,7 @@
     "required": "Required",
     "h_m": "h:m",
     "format_hours": "Format must be h:m",
+    "transportationAllowance": "Transportation allowance",
     "must_be_at_least_one": "Must be at least 1"
   },
   "result": {
