@@ -23,8 +23,8 @@
     "must_be_at_least_one": "Must be at least 1"
   },
   "result": {
-    "baseSalary": "Base Salary (65%)",
-    "allowances": "Allowances (35%)",
+    "baseSalary": "Base Salary",
+    "allowances": "Allowances",
     "gosi": "GOSI",
     "overtime": "Overtime (Total)",
     "overtime15": "Overtime (1.5x)",

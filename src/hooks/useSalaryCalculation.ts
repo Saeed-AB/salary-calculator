@@ -14,7 +14,7 @@ function round2(value: number): number {
 }
 
 export function calculateBaseSalary(totalSalary: number): number {
-  return round2(totalSalary * 0.65);
+  return round2(totalSalary / 1.35);
 }
 
 const overtimeBase = (baseSalary: number) => {
@@ -49,7 +49,7 @@ const useSalaryCalculation = (args: UseSalaryCalculationArgs) => {
   } = args;
 
   const baseSalary = calculateBaseSalary(totalSalary);
-  const allowances = totalSalary - baseSalary;
+  const allowances = round2(baseSalary * 0.35)
 
   const calculateOvertime = overtimeBase(baseSalary);
 
