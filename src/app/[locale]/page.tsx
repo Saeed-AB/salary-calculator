@@ -82,7 +82,7 @@ export default function HomePage() {
             <Input
               className="col-span-12"
               label={t("form.totalSalary")}
-              type="text"
+              type="password"
               inputMode="decimal"
               {...form.register("totalSalary")}
               error={
@@ -200,7 +200,7 @@ export default function HomePage() {
               </Button>
             </div>
           </form>
-          <div className="rounded-md border p-4 grid gap-2">
+          <div className="rounded-md border p-4 grid gap-2 blur-lg hover:blur-none transition duration-500">
             <div className="flex justify-between">
               <span>{t("result.baseSalary")}</span>
               <span>{live.baseSalary}</span>
